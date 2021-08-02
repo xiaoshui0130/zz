@@ -4,7 +4,7 @@
 
 Redis 官方站这篇文章提出了一种权威的基于 Redis 实现分布式锁的方式名叫 *Redlock*，此种方式比原先的单节点的方法更安全。它可以保证以下特性：
 
-1. 安全特性：互斥访问，即永远只有一个 client 能拿到锁
+1. 安全特性：==互斥访问==，即永远只有一个 client 能拿到锁
 2. 避免死锁：最终 client 都可能拿到锁，不会出现死锁的情况，即使原本锁住某资源的 client crash 了或者出现了网络分区
 3. 容错性：只要大部分 Redis 节点存活就可以正常提供服务
 
@@ -12,7 +12,7 @@ Redis 官方站这篇文章提出了一种权威的基于 Redis 实现分布式�
 
 > SET resource_name my_random_value NX PX 30000
 
-主要依靠上述命令，该命令仅当 Key 不存在时（NX保证）set 值，并且设置过期时间 3000ms （PX保证），值 my_random_value 必须是所有 client 和所有锁请求发生期间唯一的，释放锁的逻辑是：
+主要依靠上述命令，该命令仅当 Key ==不存在时==（NX保证）set 值，并且设置==过期时间== 3000ms （PX保证），值 my_random_value 必须是所有 client 和所有锁请求发生期间==唯一==的，释放锁的逻辑是：
 
 ```lua
 if redis.call("get",KEYS[1]) == ARGV[1] then
