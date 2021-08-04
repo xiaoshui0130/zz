@@ -14,7 +14,7 @@ enum关键字在 java5 中引入，表示一种特殊类型的类，其总是继
 
 枚举在很多时候会和常量拿来对比，可能因为本身我们大量实际使用枚举的地方就是为了替代常量。那么这种方式由什么优势呢？
 
-**以这种方式定义的常量使代码更具可读性，允许进行编译时检查，预先记录可接受值的列表，并避免由于传入无效值而引起的意外行为。**
+**以这种方式定义的常量使代码更具==可读性==，允许进行==编译时检查==，预先记录可接受值的列表，并避免由于传入无效值而引起的意外行为。**
 
 下面示例定义一个简单的枚举类型 pizza 订单的状态，共有三种 ORDERED, READY, DELIVERED状态:
 
@@ -60,9 +60,9 @@ public class Pizza {
 
 ## 3.使用 == 比较枚举类型
 
-由于枚举类型确保JVM中仅存在一个常量实例，因此我们可以安全地使用 `==` 运算符比较两个变量，如上例所示；此外，`==` 运算符可提供编译时和运行时的安全性。
+由于枚举类型确保==JVM中仅存在一个常量实例==，因此我们可以安全地使用 `==` 运算符比较两个变量，如上例所示；此外，`==` 运算符可提供编译时和运行时的安全性。
 
-首先，让我们看一下以下代码段中的运行时安全性，其中 `==` 运算符用于比较状态，并且如果两个值均为null 都不会引发 NullPointerException。相反，如果使用equals方法，将抛出 NullPointerException：
+首先，让我们看一下以下代码段中的运行时安全性，其中 ==`==` 运算符用于比较状态==，并且如果两个值均为null 都不会引发 NullPointerException。相反，如果使用equals方法，将抛出 NullPointerException：
 
 ```java
 Pizza.PizzaStatus pizza = null;
@@ -77,7 +77,7 @@ if (Pizza.PizzaStatus.DELIVERED.equals(TestColor.GREEN)); // 编译正常
 if (Pizza.PizzaStatus.DELIVERED == TestColor.GREEN);      // 编译失败，类型不匹配
 ```
 
-## 4.在 switch 语句中使用枚举类型
+## 4.在 ==switch 语句==中使用枚举类型
 
 ```java
 public int getDeliveryTimeInDays() {
@@ -170,7 +170,7 @@ public void givenPizaOrder_whenReady_thenDeliverable() {
 
 ### 6.1. EnumSet
 
-`EnumSet` 是一种专门为枚举类型所设计的 `Set` 类型。
+`EnumSet` 是一种专门为枚举类型所设计的 ==`Set` 类型==。
 
 与`HashSet`相比，由于使用了内部位向量表示，因此它是特定 `Enum` 常量集的非常有效且紧凑的表示形式。
 
@@ -346,11 +346,11 @@ public enum PizzaDeliverySystemConfiguration {
 PizzaDeliveryStrategy deliveryStrategy = PizzaDeliverySystemConfiguration.getInstance().getDeliveryStrategy();
 ```
 
-通过 `PizzaDeliverySystemConfiguration.getInstance()` 获取的就是单例的 `PizzaDeliverySystemConfiguration`
+通过 `PizzaDeliverySystemConfiguration.getInstance()` 获取的就是==单例的 `PizzaDeliverySystemConfiguration`==
 
 ### 7.2 策略模式
 
-通常，策略模式由不同类实现同一个接口来实现的。
+通常，策略模式由==不同类实现同一个接口==来实现的。
 
  这也就意味着添加新策略意味着添加新的实现类。使用枚举，可以轻松完成此任务，添加新的实现意味着只定义具有某个实现的另一个实例。
 
