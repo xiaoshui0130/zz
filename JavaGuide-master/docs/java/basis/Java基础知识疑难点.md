@@ -25,7 +25,7 @@
 
 ## 1.1. 正确使用 equals 方法
 
-Object的equals方法容易抛空指针异常，应使用常量或确定有值的对象来调用 equals。 
+==Object==的equals方法==容易抛空指针异常==，应使用==常量==或==确定有值的对象==来调用 equals。 
 
 举个例子：
 
@@ -61,9 +61,9 @@ public static boolean equals(Object a, Object b) {
 
 Reference:[Java中equals方法造成空指针异常的原因及解决方案](https://blog.csdn.net/tick_tock97/article/details/72824894)
 
-- 每种原始类型都有默认值一样，如int默认值为 0，boolean 的默认值为 false，null 是任何引用类型的默认值，不严格的说是所有 Object 类型的默认值。
-- 可以使用 == 或者 != 操作来比较null值，但是不能使用其他算法或者逻辑操作。在Java中`null == null`将返回true。
-- 不能使用一个值为null的引用类型变量来调用非静态方法，否则会抛出异常
+- 每种原始类型都有默认值一样，如int默认值为 0，boolean 的默认值为 false，null 是任何引用类型的默认值，不严格的说是所有 ==Object 类型的默认值==。
+- 可以使用 == 或者 != 操作来比较null值，但是不能使用其他算法或者逻辑操作。在Java中==`null == null`将返回true。==
+- ==不能==使用一个值为==null的引用类型变量来调用非静态方法==，否则会抛出异常
 
 ## 1.2. 整型包装类值的比较
 
@@ -89,7 +89,7 @@ System.out.println(i1==i2);//false
 
 ### 1.3.1. BigDecimal 的用处
 
-《阿里巴巴Java开发手册》中提到：**浮点数之间的等值判断，基本数据类型不能用==来比较，包装数据类型不能用 equals 来判断。** 具体原理和浮点数的编码方式有关，这里就不多提了，我们下面直接上实例：
+《阿里巴巴Java开发手册》中提到：**==浮点数==之间的等值判断，==基本数据类型不能用==========来比较==，==包装数据类型不能用 equals 来判断==。** 具体原理和浮点数的编码方式有关，这里就不多提了，我们下面直接上实例：
 
 ```java
 float a = 1.0f - 0.9f;
@@ -98,7 +98,7 @@ System.out.println(a);// 0.100000024
 System.out.println(b);// 0.099999964
 System.out.println(a == b);// false
 ```
-具有基本数学知识的我们很清楚的知道输出并不是我们想要的结果（**精度丢失**），我们如何解决这个问题呢？一种很常用的方法是：**使用 BigDecimal 来定义浮点数的值，再进行浮点数的运算操作。**
+具有基本数学知识的我们很清楚的知道输出并不是我们想要的结果（**==精度丢失==**），我们如何解决这个问题呢？一种很常用的方法是：**使用 ==BigDecimal== 来定义浮点数的值，再进行浮点数的运算操作。**
 
 ```java
 BigDecimal a = new BigDecimal("1.0");
@@ -152,13 +152,13 @@ Reference:《阿里巴巴Java开发手册》
 - 【强制】RPC 方法的返回值和参数必须使用包装数据类型。
 - 【推荐】所有的局部变量使用基本数据类型。
 
-比如我们如果自定义了一个Student类,其中有一个属性是成绩score,如果用Integer而不用int定义,一次考试,学生可能没考,值是null,也可能考了,但考了0分,值是0,这两个表达的状态明显不一样.
+比如我们如果自定义了一个Student类,其中有一个属性是成绩score,==如果用Integer==而不用int定义,一次考试,学生可能没考,值是==null==,也可能考了,但==考了0分==,值是0,这两个表达的状态明显不一样.
 
 **说明** :POJO 类属性没有初值是提醒使用者在需要使用时，必须自己显式地进行赋值，任何 NPE 问题，或者入库检查，都由使用者来保证。
 
 **正例** : 数据库的查询结果可能是 null，因为自动拆箱，用基本数据类型接收有 NPE 风险。
 
-**反例** : 比如显示成交总额涨跌情况，即正负 x%，x 为基本数据类型，调用的 RPC 服务，调用不成功时，返回的是默认值，页面显示为 0%，这是不合理的，应该显示成中划线。所以包装数据类型的 null 值，能够表示额外的信息，如:远程调用失败，异常退出。
+**反例** : 比如显示成交总额涨跌情况，即正负 x%，x 为基本数据类型，调用的 RPC 服务，调用不成功时，返回的是默认值，页面显示为 0%，这是不合理的，应该显示成中划线。所以包装数据类型的 ==null 值==，能够表示==额外的信息==，如:远程调用失败，异常退出。
 
 # 2. 集合
 
@@ -199,7 +199,7 @@ public static <T> List<T> asList(T... a) {
 
 **传递的数组必须是对象数组，而不是基本类型。** 
 
-`Arrays.asList()`是泛型方法，传入的对象必须是对象数组。
+`Arrays.asList()`是泛型方法，传入的对象必须是==对象数组==。
 
 ```java
 int[] myArray = {1, 2, 3};
@@ -210,7 +210,7 @@ System.out.println(myList.get(1));//报错：ArrayIndexOutOfBoundsException
 int[] array = (int[]) myList.get(0);
 System.out.println(array[0]);//1
 ```
-当传入一个原生数据类型数组时，`Arrays.asList()` 的真正得到的参数就不是数组中的元素，而是数组对象本身！此时List 的唯一元素就是这个数组，这也就解释了上面的代码。
+当传入一个原生数据类型数组时，`Arrays.asList()` 的真正得到的参数就不是数组中的元素，而是==数组对象==本身！此时List 的==唯一元素就是这个数组==，这也就解释了上面的代码。
 
 我们使用包装类型数组就可以解决这个问题。
 
@@ -227,7 +227,7 @@ myList.remove(1);//运行时报错：UnsupportedOperationException
 myList.clear();//运行时报错：UnsupportedOperationException
 ```
 
-`Arrays.asList()` 方法返回的并不是 `java.util.ArrayList` ，而是 `java.util.Arrays` 的一个内部类,这个内部类并没有实现集合的修改方法或者说并没有重写这些方法。
+`Arrays.asList()` 方法返回的并不是 `java.util.ArrayList` ，而是 ==`java.util.Arrays` 的一个内部类==,这个内部类并没有实现集合的修改方法或者说并没有重写这些方法。
 
 ```java
 List myList = Arrays.asList(1, 2, 3);
@@ -374,11 +374,11 @@ s=list.toArray(new String[0]);//没有指定类型的话会报错
 
 ## 2.3. 不要在 foreach 循环里进行元素的 remove/add 操作
 
-如果要进行`remove`操作，可以调用迭代器的 `remove `方法而不是集合类的 remove 方法。因为如果列表在任何时间从结构上修改创建迭代器之后，以任何方式除非通过迭代器自身`remove/add`方法，迭代器都将抛出一个`ConcurrentModificationException`,这就是单线程状态下产生的 **fail-fast 机制**。
+如果要进行`remove`操作，可以调用==迭代器的 `remove `方法==而不是集合类的 remove 方法。因为如果列表在任何时间从结构上修改创建迭代器之后，以==任何方式==除非通过迭代器自身`remove/add`方法，迭代器都将抛出一个==`ConcurrentModificationException`==,这就是单线程状态下==产生的 **fail-fast 机制**==。
 
 > **fail-fast 机制** ：多个线程对 fail-fast 集合进行修改的时候，可能会抛出ConcurrentModificationException，单线程下也会出现这种情况，上面已经提到过。
 
-Java8开始，可以使用`Collection#removeIf()`方法删除满足特定条件的元素,如
+Java8开始，可以使用==`Collection#removeIf()`方法删除满足特定条件的元素==,如
 ``` java
 List<Integer> list = new ArrayList<>();
 for (int i = 1; i <= 10; ++i) {
