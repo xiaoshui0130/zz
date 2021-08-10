@@ -4,7 +4,7 @@
 
 ## 自动拆装箱
 
-对于基本类型和包装类型之间的转换，通过xxxValue()和valueOf()两个方法完成自动拆装箱，使用jad进行反编译可以看到该过程：
+对于基本类型和包装类型之间的转换，通过xxxValue()和valueOf()两个方法完成自动拆装箱，使用==jad进行反编译==可以看到该过程：
 
 ```java
 public class Demo {
@@ -89,7 +89,7 @@ public class Demo
 
 ## Arrays.asList(T...)
 
-熟悉Arrays.asList(T...)用法的小伙伴都应该知道，asList()方法传入的参数不能是基本类型的数组，必须包装成包装类型再使用，否则对应生成的列表的大小永远是1：
+熟悉==Arrays.asList(T...)==用法的小伙伴都应该知道，asList()方法传入的参数不能是基本类型的数组，必须包装成包装类型再使用，==否则对应生成的列表的大小永远是1==：
 
 ```java
 import java.util.*;
@@ -157,8 +157,8 @@ public @interface Foo{
 ```
 查看反编译代码可以看出：
 
--   自定义的注解类Foo被转换成接口Foo，并且继承Annotation接口
--   原来自定义接口中的value()和bar()被转换成抽象方法
+-   自定义的==注解类Foo被转换成接口Foo，并且继承Annotation接口==
+-   原来自定==义接口中的value()和bar()被转换成抽象方法==
 
 ```java
 import java.lang.annotation.Annotation;

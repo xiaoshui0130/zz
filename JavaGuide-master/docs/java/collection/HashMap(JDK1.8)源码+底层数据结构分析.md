@@ -38,9 +38,11 @@ HashMap 通过 key 的 hashCode 经过扰动函数处理过后得到 hash 值，
 
 所谓扰动函数指的就是 HashMap 的 hash 方法。使用 hash 方法也就是扰动函数是为了防止一些实现比较差的 hashCode() 方法 换句话说使用扰动函数之后可以减少碰撞。
 
-**JDK 1.8 HashMap 的 hash 方法源码:**
+**JDK 1.8 HashMap 的 hash 方法源码:**         ==>>>无符号右移 空位以0补齐==
 
 JDK 1.8 的 hash 方法 相比于 JDK 1.7 hash 方法更加简化，但是原理不变。
+
+Java字符串的`hashCode()`就是一个==哈希算法==，它的输入是任意字符串，输出是固定的==4字节`int`整数==：
 
 ```java
     static final int hash(Object key) {
@@ -75,7 +77,7 @@ static int hash(int h) {
 
 相比于之前的版本，JDK1.8 以后在解决哈希冲突时有了较大的变化。
 
-当链表长度大于阈值（默认为 8）时，会首先调用 `treeifyBin()`方法。这个方法会根据 HashMap 数组来决定是否转换为红黑树。只有当数组长度大于或者等于 64 的情况下，才会执行转换红黑树操作，以减少搜索时间。否则，就是只是执行 `resize()` 方法对数组扩容。相关源码这里就不贴了，重点关注 `treeifyBin()`方法即可！
+当链表长度大于阈值（默认为 8）时，会首先调用 `treeifyBin()`方法。这个方法会根据 HashMap 数组来决定是否转换为红黑树。只有当数组==长度大于或者等于 64== 的情况下，才会执行转换==红黑树==操作，以减少搜索时间。否则，就是==只是执行 `resize()` 方法对数组扩容==。相关源码这里就不贴了，重点关注 `treeifyBin()`方法即可！
 
 ![](https://oscimg.oschina.net/oscnet/up-bba283228693dae74e78da1ef7a9a04c684.png)
 
@@ -114,15 +116,15 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
 
 - **loadFactor 加载因子**
 
-  loadFactor 加载因子是控制数组存放数据的疏密程度，loadFactor 越趋近于 1，那么 数组中存放的数据(entry)也就越多，也就越密，也就是会让链表的长度增加，loadFactor 越小，也就是趋近于 0，数组中存放的数据(entry)也就越少，也就越稀疏。
+  loadFactor 加载因子是==控制数组存放数据的疏密程度==，loadFactor 越趋近于 1，那么 数组中存放的数据(entry)也就越多，也就越密，也就是会让链表的长度增加，loadFactor 越小，也就是趋近于 0，数组中存放的数据(entry)也就越少，也就越稀疏。
 
   **loadFactor 太大导致查找元素效率低，太小导致数组的利用率低，存放的数据会很分散。loadFactor 的默认值为 0.75f 是官方给出的一个比较好的临界值**。
 
-  给定的默认容量为 16，负载因子为 0.75。Map 在使用过程中不断的往里面存放数据，当数量达到了 16 \* 0.75 = 12 就需要将当前 16 的容量进行扩容，而扩容这个过程涉及到 rehash、复制数据等操作，所以非常消耗性能。
+  给定的默认容量为 16，负载因子为 0.75。Map 在使用过程中不断的往里面存放数据，当==数量达到了 16 \* 0.75 = 12 就需要将当前 16 的容量进行扩容，而扩容这个过程涉及到 rehash、复制数据==等操作，所以非常消耗性能。
 
 - **threshold**
 
-  **threshold = capacity \* loadFactor**，**当 Size>=threshold**的时候，那么就要考虑对数组的扩增了，也就是说，这个的意思就是 **衡量数组是否需要扩增的一个标准**。
+  **threshold = capacity \* loadFactor**，**当 Size>=threshold**的时候，那么就要考虑对==数组的扩增==了，也就是说，这个的意思就是 **衡量数组是否需要扩增的一个标准**。
 
 **Node 节点类源码:**
 
